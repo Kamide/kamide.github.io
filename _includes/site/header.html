@@ -1,0 +1,19 @@
+<header class="top-level">
+    <h1 class="top-level heading link">
+        <a href="https://github.com/{{ site.github_username }}" target="_blank" title="GitHub Profile">{{ site.title }}</a>
+    </h1>
+    <nav>
+        <ul class="navigation">
+            {% for link in site.data.header_links %}
+                <li class="
+                    {% if page.url == link.destination  %}
+                        active
+                    {% endif %}
+                    link
+                ">
+                    <a href="{{ link.destination }}">{{ link.text }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</header>

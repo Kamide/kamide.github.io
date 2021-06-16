@@ -1,0 +1,181 @@
+---
+---
+
+$unit-font-size: 24px;
+$unit-spacing: $unit-font-size;
+$unit-icon-size: 2 * $unit-font-size;
+$viewport-width: 1024px;
+
+$display-color: hsl(230, 50, 50);
+$display-font: 'JetBrains Mono', 'Courier New', Courier, monospace;
+$text-background-color: white;
+$text-color: black;
+$text-font: Arimo, Arial, Helvetica, sans-serif;
+$text-font-size: $unit-font-size;
+
+$heading-font-size: (
+    'h1': 1.375em,
+    'h2': 1.25em,
+    'h3': 1.125em,
+    'h4': 1em,
+    'h5': 0.875em,
+    'h6': 0.75em
+);
+
+@mixin zero-spacing {
+    margin: 0;
+    padding: 0;
+}
+
+@mixin content-spacing {
+    margin: $unit-spacing 0;
+    padding: 0;
+}
+
+@mixin heading($level) {
+    font-family: $display-font;
+    font-size: map-get($heading-font-size, 'h' + $level);
+    font-weight: bold;
+    padding: $unit-spacing;
+}
+
+@mixin square($length) {
+    height: $length;
+    width: $length;
+}
+
+@function icon-frame-position($frame) {
+    @return -($frame - 1) * $unit-icon-size;
+}
+
+@mixin icon($background-image, $frames:1) {
+    &::before {
+        @include square($unit-icon-size);
+        background-image: $background-image;
+        background-position-x: 50%;
+        background-position-y: 50%;
+        background-size: cover;
+        content: '';
+        display: inline-block;
+        margin-right: 0.5 * $unit-icon-size;
+        transform: translateY(-0.06 * $unit-icon-size);
+        vertical-align: middle;
+
+        @if $frames > 1 {
+            background-position-x: 0;
+        }
+    }
+
+    &:hover::before {
+        @if $frames > 1 {
+            background-position-x: icon-frame-position($frames);
+            transition: background-position 0.25s;
+            transition-timing-function: steps($frames, jump-none);
+        }
+    }
+}
+
+html {
+    font-size: $text-font-size;
+}
+
+body {
+    @include zero-spacing;
+    background-color: $text-background-color;
+    color: $display-color;
+    font-family: $text-font;
+    line-height: 1.5;
+}
+
+.viewport {
+    align-items: flex-start;
+    display: flex;
+    margin: auto;
+    max-width: $viewport-width;
+
+    > .top-level {
+        margin: 1.25 * $unit-spacing;
+
+        &:not(:first-child) {
+            margin-left: 0.5 * $unit-spacing;
+        }
+
+        &:not(:last-child) {
+            margin-right: 0.5 * $unit-spacing;
+        }
+    }
+}
+
+header.top-level {
+    font-family: $display-font;
+    position: sticky;
+    top: 1.25 * $unit-spacing;
+
+    .navigation {
+        @include zero-spacing;
+        list-style: none;
+    }
+
+    .link {
+        @include zero-spacing;
+        font-weight: normal;
+
+        &.active, &:hover {
+            font-weight: bold;
+            position: relative;
+        }
+
+        &.heading a {
+            @include icon(url('https://github.com/{{ site.github_username }}.png'));
+
+            &::before {
+                border-radius: 2px;
+                box-shadow: 0 0 0 2px $display-color;
+            }
+        }
+
+        &:not(.heading) a {
+            @include icon(url('../icons/book.svg'), 6);
+        }
+
+        &.active a::before {
+            background-position-x: icon-frame-position(6);
+        }
+
+        a {
+            color: inherit;
+            display: block;
+            padding: $unit-spacing;
+            text-decoration: none;
+        }
+    }
+}
+
+main.top-level {
+    flex: 1;
+}
+
+.heading.top-level {
+    @include zero-spacing;
+    @include heading(1);
+}
+
+.content {
+    color: $text-color;
+    padding: 0 $unit-spacing;
+
+    @for $level from 1 through 6 {
+        h#{$level} {
+            @include heading($level);
+            @include content-spacing;
+        }
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    p {
+        @include content-spacing;
+    }
+}
