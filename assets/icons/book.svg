@@ -1,4 +1,4 @@
 ---
 ---
 
-{% include icons/book.svg stroke-color="#4055bf" %}
+{% include icons/book.svg stroke_color="#4055bf" %}
