@@ -1,17 +1,28 @@
 ---
 ---
 
-$unit-font-size: 24px;
-$unit-spacing: $unit-font-size;
-$unit-icon-size: 2 * $unit-font-size;
-$viewport-width: 1024px;
+$media: (
+    'desktop': (
+        'viewport-breakpoint': 1280px,
+        'font-size': 24px
+    ),
+    'tablet': (
+        'viewport-breakpoint': 1024px,
+        'font-size': 22px
+    ),
+    'mobile': (
+        'font-size': 20px
+    )
+);
+
+$unit-spacing: 1rem;
+$unit-icon-size: 48px;
 
 $display-color: hsl(230, 50, 50);
 $display-font: 'JetBrains Mono', 'Courier New', Courier, monospace;
 $text-background-color: white;
 $text-color: black;
 $text-font: Arimo, Arial, Helvetica, sans-serif;
-$text-font-size: $unit-font-size;
 
 $heading-font-size: (
     'h1': 1.375em,
@@ -28,8 +39,16 @@ $heading-font-size: (
 }
 
 @mixin content-spacing {
-    margin: $unit-spacing 0;
+    margin: 1rem 0;
     padding: 0;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 @mixin heading($level) {
@@ -76,7 +95,7 @@ $heading-font-size: (
 }
 
 html {
-    font-size: $text-font-size;
+    font-size: map-get(map-get($media, 'desktop'), 'font-size');
 }
 
 body {
@@ -91,7 +110,7 @@ body {
     align-items: flex-start;
     display: flex;
     margin: auto;
-    max-width: $viewport-width;
+    max-width: map-get(map-get($media, 'desktop'), 'viewport-breakpoint');
 
     > .top-level {
         margin: 1.25 * $unit-spacing;
@@ -162,6 +181,7 @@ main.top-level {
 
 .content {
     color: $text-color;
+    margin-bottom: 1.25 * $unit-spacing;
     padding: 0 $unit-spacing;
 
     @for $level from 1 through 6 {
@@ -169,13 +189,78 @@ main.top-level {
             @include heading($level);
             @include content-spacing;
         }
-
-        &:first-child {
-            margin-top: 0;
-        }
     }
 
     p {
         @include content-spacing;
+    }
+}
+
+@media screen and
+    (min-width: map-get(map-get($media, 'tablet'), 'viewport-breakpoint')) and
+    (max-width: map-get(map-get($media, 'desktop'), 'viewport-breakpoint') - 1) {
+    /* Tablet */
+
+    html {
+        font-size: map-get(map-get($media, 'tablet'), 'font-size');
+    }
+
+    .viewport > .top-level {
+        margin: 0.5 * $unit-spacing;
+
+        &:not(:first-child) {
+            margin-left: 0;
+        }
+
+        &:not(:last-child) {
+            margin-right: 0;
+        }
+    }
+
+    header.top-level {
+        top: 0.5 * $unit-spacing;
+
+        .link:not(.heading) a {
+            padding-bottom: 0.75 * $unit-spacing;
+            padding-top: 0.75 * $unit-spacing;
+        }
+    }
+}
+
+@media screen and (max-width: map-get(map-get($media, 'tablet'), 'viewport-breakpoint') - 1) {
+    /* Mobile */
+
+    html {
+        font-size: map-get(map-get($media, 'mobile'), 'font-size');
+    }
+
+    .viewport {
+        align-items: stretch;
+        flex-direction: column;
+
+        > .top-level {
+            margin: 0.75 * $unit-spacing 0;
+
+            &:not(:first-child) {
+                margin-left: 0;
+            }
+
+            &:not(:last-child) {
+                margin-right: 0;
+                margin-top: 0;
+            }
+        }
+    }
+
+    header.top-level {
+        background-color: $text-background-color;
+        border-bottom: thin solid $display-color;
+        padding: (1.25 * $unit-spacing) 0;
+        position: relative;
+        top: 0;
+
+        .heading {
+            font-size: 1em;
+        }
     }
 }
