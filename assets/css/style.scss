@@ -17,12 +17,18 @@ $media: (
 
 $unit-spacing: 1rem;
 $unit-icon-size: 48px;
+$unit-stroke-width: 2px;
+$unit-border-radius: 4px;
 
 $display-color: hsl(230, 50, 50);
 $display-font: 'JetBrains Mono', 'Courier New', Courier, monospace;
 $text-background-color: white;
 $text-color: black;
 $text-font: Arimo, Arial, Helvetica, sans-serif;
+$link-color: hsl(215, 50, 50);
+$link-color-negative: hsl(50, 100, 65);
+
+$unit-border: $unit-stroke-width solid $display-color;
 
 $heading-font-size: (
     'h1': 1.375em,
@@ -34,6 +40,12 @@ $heading-font-size: (
 );
 
 @mixin zero-spacing {
+    margin: 0;
+    padding: 0;
+}
+
+@mixin zero-spacing-list {
+    list-style: none;
     margin: 0;
     padding: 0;
 }
@@ -63,13 +75,19 @@ $heading-font-size: (
     width: $length;
 }
 
+@mixin icon-vertical-align {
+    transform: translateY(-0.0625 * $unit-icon-size);
+    vertical-align: middle;
+}
+
 @function icon-frame-position($frame) {
     @return -($frame - 1) * $unit-icon-size;
 }
 
-@mixin icon($background-image, $frames:1) {
+@mixin icon($background-image, $frames:1, $duration:1s) {
     &::before {
         @include square($unit-icon-size);
+        @include icon-vertical-align;
         background-image: $background-image;
         background-position-x: 50%;
         background-position-y: 50%;
@@ -77,8 +95,6 @@ $heading-font-size: (
         content: '';
         display: inline-block;
         margin-right: 0.5 * $unit-icon-size;
-        transform: translateY(-0.06 * $unit-icon-size);
-        vertical-align: middle;
 
         @if $frames > 1 {
             background-position-x: 0;
@@ -88,9 +104,18 @@ $heading-font-size: (
     &:hover::before {
         @if $frames > 1 {
             background-position-x: icon-frame-position($frames);
-            transition: background-position 0.25s;
+            transition: background-position $duration;
             transition-timing-function: steps($frames, jump-none);
         }
+    }
+}
+
+@mixin negative-contrast {
+    background-color: $display-color;
+    color: $text-background-color;
+
+    a {
+        color: $link-color-negative;
     }
 }
 
@@ -131,8 +156,7 @@ header.top-level {
     top: 1.25 * $unit-spacing;
 
     .navigation {
-        @include zero-spacing;
-        list-style: none;
+        @include zero-spacing-list;
     }
 
     .link {
@@ -148,13 +172,13 @@ header.top-level {
             @include icon(url('https://github.com/{{ site.github_username }}.png'));
 
             &::before {
-                border-radius: 2px;
-                box-shadow: 0 0 0 2px $display-color;
+                border-radius: $unit-border-radius;
+                box-shadow: 0 0 0 $unit-stroke-width $display-color;
             }
         }
 
         &:not(.heading) a {
-            @include icon(url('../icons/book.svg'), 6);
+            @include icon(url('../icons/book.svg'), 6, 0.25s);
         }
 
         &.active a::before {
@@ -181,8 +205,13 @@ main.top-level {
 
 .content {
     color: $text-color;
-    margin-bottom: 1.25 * $unit-spacing;
+    margin-bottom: 2 * $unit-spacing;
     padding: 0 $unit-spacing;
+
+    a {
+        color: $link-color;
+        font-weight: bold;
+    }
 
     @for $level from 1 through 6 {
         h#{$level} {
@@ -191,8 +220,87 @@ main.top-level {
         }
     }
 
-    p {
+    .subcontent, p, article, section, figure {
         @include content-spacing;
+    }
+
+    figure {
+        border: $unit-border;
+        border-radius: $unit-border-radius;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        width: 100%;
+
+        img {
+            height: auto;
+            width: 100%;
+        }
+
+        figcaption {
+            @include negative-contrast;
+            padding: 0.5 * $unit-spacing;
+        }
+    }
+}
+
+.github-user {
+    text-decoration: none;
+
+    img {
+        @include icon-vertical-align;
+        border: $unit-border;
+        border-radius: $unit-border-radius;
+        margin: 0.25em;
+        margin-left: 0;
+    }
+}
+
+.project {
+    figure {
+        @include zero-spacing;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .details {
+        @include zero-spacing;
+        border: $unit-border;
+        display: flex;
+
+        &:last-child {
+            border-bottom-left-radius: $unit-border-radius;
+            border-bottom-right-radius: $unit-border-radius;
+        }
+
+        h4 {
+            @include zero-spacing;
+            border-right: $unit-border;
+            padding: 0.5 * $unit-spacing;
+        }
+
+        ul {
+            @include zero-spacing-list;
+            flex: 1;
+            padding: 0.5 * $unit-spacing;
+
+            li {
+                display: inline-block;
+
+                &:not(:last-child):after {
+                    content: ',';
+                }
+            }
+        }
+    }
+
+    .details:nth-child(2n + 1) {
+        @include negative-contrast;
+
+        h4 {
+            border-color: $text-background-color;
+        }
     }
 }
 
@@ -254,7 +362,7 @@ main.top-level {
 
     header.top-level {
         background-color: $text-background-color;
-        border-bottom: thin solid $display-color;
+        border-bottom: $unit-border;
         padding: (1.25 * $unit-spacing) 0;
         position: relative;
         top: 0;

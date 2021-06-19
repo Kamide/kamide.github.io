@@ -1,2 +1,5 @@
 - text: About
   destination: /
+
+- text: Projects
+  destination: /projects.html

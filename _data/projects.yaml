@@ -1,0 +1,83 @@
+-
+  name: CityChat
+  repository: citychat
+  image: https://raw.githubusercontent.com/Kamide/citychat/master/src/screenshot.png
+  description: "**CityChat** is a general-purpose chat app. With both direct and group messaging capabilities, it can accommodate your needs."
+  technologies:
+    - HTML
+    - SVG
+    - CSS
+    - JavaScript
+    - Python
+    - PostgreSQL
+  tools:
+    - React
+    - Flask
+    - Socket.IO
+    - Inkscape
+
+-
+  name: Concentration
+  repository: Concentration
+  image: https://raw.githubusercontent.com/Kamide/Concentration/master/src/screenshot.png
+  description: "**Concentration**, also known as Memory, is a card game. The objective is to find and match all card pairs. You can play by yourself or team up with friends!"
+  technologies:
+    - HTML
+    - CSS
+    - JavaScript
+  tools:
+    - Node
+    - Express
+    - Socket.IO
+
+-
+  name: Whiteboard
+  repository: Whiteboard
+  image: https://raw.githubusercontent.com/Kamide/Whiteboard/master/screenshots/assignment.png
+  description: "**Whiteboard** is a web-based gradebook and attendance tracker for teachers and students."
+  technologies:
+    - HTML
+    - SVG
+    - CSS
+    - JavaScript
+    - Python
+    - SQLite
+  tools:
+    - Flask
+    - Inkscape
+  team:
+    - MdNeel
+    - MunifNagi
+
+-
+  name: DSS
+  repository: DSS
+  image: https://raw.githubusercontent.com/Kamide/DSS/master/screenshots/document.png
+  description: "**DSS** is a website that allows users to create, edit, and share documents."
+  technologies:
+    - HTML
+    - CSS
+    - JavaScript
+    - Python
+    - SQLite
+  tools:
+    - Django
+    - GIMP
+  team:
+    - AAAliBaba
+    - Akasora39
+
+-
+  name: "Social Hacks: Mental Health"
+  repository: Social-Hacks
+  deployment: gh-pages
+  image: https://raw.githubusercontent.com/Kamide/Social-Hacks/master/images/BG.png
+  description: "**Social Hacks: Mental Health** is a visual novel that tackles misconceptions and stigma towards mental health."
+  technologies:
+    - HTML
+    - CSS
+    - JavaScript
+  tools:
+    - Adobe Photoshop
+  team:
+    - amy-yu

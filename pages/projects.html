@@ -1,0 +1,55 @@
+---
+title: Projects
+permalink: /projects.html
+---
+
+{% for project in site.data.projects %}
+    {% assign figcaption_id = 'project' | append: project.repository | replace: '-', '' %}
+    <article class="project">
+        <h3>{{ project.name }}</h3>
+        <div class="subcontent">
+            <figure>
+                <img aria-labelledby="{{ figcaption_id }}" src="{{ project.image }}" width="1280" height="720" >
+                <figcaption id="{{ figcaption_id }}">{{ project.description | markdownify }}</figcaption>
+            </figure>
+            <section class="details">
+                <h4>Technologies</h4>
+                <ul>
+                    {% for technology in project.technologies %}
+                        <li>{{ technology }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section class="details">
+                <h4>Tools</h4>
+                <ul>
+                    {% for tools in project.tools %}
+                        <li>{{ tools }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% if project.team %}
+                <section class="details">
+                    <h4>Team</h4>
+                    <ul>
+                        {% for team_member in project.team %}
+                            <li>
+                                <a class="github-user" href="https://github.com/{{ team_member }}" target="_blank">
+                                    <img aria-label="GitHub User" src="https://github.com/{{ team_member }}.png" width="48" height="48">
+                                    <span>{{ team_member }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endif %}
+            <nav class="details">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="https://github.com/{{ site.github_username }}/{{ project.repository }}" target="_blank">Source Code</a></li>
+                    {% if project.deployment %}
+                        <li><a href="https://{{ site.github_username }}.github.io/{{ project.repository }}" target="_blank">Deployment</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </article>
+{% endfor %}
