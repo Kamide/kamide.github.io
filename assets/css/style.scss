@@ -70,6 +70,13 @@ $heading-font-size: (
     padding: $unit-spacing;
 }
 
+@mixin block-link {
+    color: inherit;
+    display: block;
+    padding: $unit-spacing;
+    text-decoration: none;
+}
+
 @mixin square($length) {
     height: $length;
     width: $length;
@@ -126,7 +133,7 @@ html {
 body {
     @include zero-spacing;
     background-color: $text-background-color;
-    color: $display-color;
+    color: $text-color;
     font-family: $text-font;
     line-height: 1.5;
 }
@@ -150,12 +157,22 @@ body {
     }
 }
 
-header.top-level {
-    font-family: $display-font;
-    position: sticky;
-    top: 1.25 * $unit-spacing;
+.heading {
+    @include zero-spacing;
+    @include heading(1);
+    color: $display-color;
+}
 
-    .navigation {
+.navigation {
+    color: $display-color;
+    font-family: $display-font;
+
+    &.top-level {
+        position: sticky;
+        top: 1.25 * $unit-spacing;
+    }
+
+    .list {
         @include zero-spacing-list;
     }
 
@@ -186,21 +203,13 @@ header.top-level {
         }
 
         a {
-            color: inherit;
-            display: block;
-            padding: $unit-spacing;
-            text-decoration: none;
+            @include block-link;
         }
     }
 }
 
 main.top-level {
     flex: 1;
-}
-
-.heading.top-level {
-    @include zero-spacing;
-    @include heading(1);
 }
 
 .content {
@@ -211,6 +220,19 @@ main.top-level {
     a {
         color: $link-color;
         font-weight: bold;
+    }
+
+    .navigation {
+        margin-left: -$unit-spacing;
+        margin-right: -$unit-spacing;
+
+        a {
+            font-weight: normal;
+
+            &:hover {
+                font-weight: bold;
+            }
+        }
     }
 
     @for $level from 1 through 6 {
@@ -304,6 +326,10 @@ main.top-level {
     }
 }
 
+.contact.navigation .link a {
+    @include icon(url('../icons/chat.svg'), 6, 0.25s);
+}
+
 @media screen and
     (min-width: map-get(map-get($media, 'tablet'), 'viewport-breakpoint')) and
     (max-width: map-get(map-get($media, 'desktop'), 'viewport-breakpoint') - 1) {
@@ -325,8 +351,10 @@ main.top-level {
         }
     }
 
-    header.top-level {
-        top: 0.5 * $unit-spacing;
+    .navigation {
+        &.top-level {
+            top: 0.5 * $unit-spacing;
+        }
 
         .link:not(.heading) a {
             padding-bottom: 0.75 * $unit-spacing;
@@ -360,12 +388,14 @@ main.top-level {
         }
     }
 
-    header.top-level {
-        background-color: $text-background-color;
-        border-bottom: $unit-border;
-        padding: (1.25 * $unit-spacing) 0;
-        position: relative;
-        top: 0;
+    .navigation {
+        &.top-level {
+            background-color: $text-background-color;
+            border-bottom: $unit-border;
+            padding: (1.25 * $unit-spacing) 0;
+            position: relative;
+            top: 0;
+        }
 
         .heading {
             font-size: 1em;
