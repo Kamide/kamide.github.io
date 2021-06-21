@@ -138,6 +138,10 @@ body {
     line-height: 1.5;
 }
 
+code {
+    font-family: $display-font;
+}
+
 .viewport {
     align-items: flex-start;
     display: flex;
@@ -244,6 +248,16 @@ main.top-level {
 
     .subcontent, p, article, section, figure {
         @include content-spacing;
+    }
+
+    ol, ul {
+        margin: $unit-spacing;
+        padding-left: $unit-spacing;
+
+        ol, ul {
+            margin: 0;
+            padding-left: 2 * $unit-spacing;
+        }
     }
 
     figure {
