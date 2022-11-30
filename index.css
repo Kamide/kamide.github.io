@@ -1,0 +1,337 @@
+:root {
+	--transition-duration: 0.2s;
+	--header-size: 4rem;
+	--spacer: 16px;
+	font-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+		--background-color: hsl(240, 0%, 8%);
+		--text-color: hsl(240, 0%, 86%);
+		--header-text-color: hsl(250, 38%, 65%);
+		--accent-color: hsl(38, 100%, 45%);
+		--sky-color-dark: hsl(215, 100%, 6%);
+		--sky-color-light: hsl(245, 40%, 24%);
+		--meteor-color: hsl(240, 100%, 78%);
+		--navigation-background: rgba(0, 0, 0, 0.6);
+		--navigation-text-color: hsl(240, 0%, 90%);
+	}
+
+	#theme-icon-mask-part {
+		cx: 85%;
+		cy: 10%;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		color-scheme: light;
+		--background-color: hsl(220, 0%, 100%);
+		--text-color: hsl(220, 0%, 0%);
+		--header-text-color: hsl(200, 100%, 86%);
+		--accent-color: hsl(34, 100%, 55%);
+		--sky-color-dark: hsl(220, 100%, 30%);
+		--sky-color-light: hsl(190, 64%, 72%);
+		--meteor-color: hsl(185, 100%, 80%);
+		--navigation-background: rgba(0, 0, 0, 0.8);
+		--navigation-text-color: hsl(220, 0%, 100%);
+	}
+
+	#theme-icon-mask-part {
+		cx: 115%;
+		cy: -20%;
+	}
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+	--background-color: hsl(240, 0%, 8%);
+	--text-color: hsl(240, 0%, 86%);
+	--header-text-color: hsl(250, 38%, 65%);
+	--accent-color: hsl(38, 100%, 45%);
+	--sky-color-dark: hsl(215, 100%, 6%);
+	--sky-color-light: hsl(245, 40%, 24%);
+	--meteor-color: hsl(240, 100%, 78%);
+	--navigation-background: rgba(0, 0, 0, 0.6);
+	--navigation-text-color: hsl(240, 0%, 90%);
+}
+
+[data-theme='dark'] #theme-icon-mask-part {
+	cx: 85%;
+	cy: 10%;
+}
+
+[data-theme='light'] {
+	color-scheme: light;
+	--background-color: hsl(220, 0%, 100%);
+	--text-color: hsl(220, 0%, 0%);
+	--header-text-color: hsl(200, 100%, 86%);
+	--accent-color: hsl(34, 100%, 55%);
+	--sky-color-dark: hsl(220, 100%, 30%);
+	--sky-color-light: hsl(190, 64%, 72%);
+	--meteor-color: hsl(185, 100%, 80%);
+	--navigation-background: rgba(0, 0, 0, 0.8);
+	--navigation-text-color: hsl(220, 0%, 100%);
+}
+
+[data-theme='light'] #theme-icon-mask-part {
+	cx: 115%;
+	cy: -20%;
+}
+
+[data-loading] * {
+	/* disables transitions before theme is set */
+	transition: none !important;
+}
+
+html, body, .slideshow {
+	height: 100%;
+}
+
+html, body {
+	/* Prevent mobile address bar from moving */
+	overflow: hidden;
+}
+
+body {
+	margin: 0;
+	background: var(--background-color);
+	color: var(--text-color);
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.6;
+	transition: background-color var(--transition-duration);
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent-color);
+	outline-offset: -2px;
+}
+
+.slideshow {
+	scroll-snap-type: y mandatory;
+	overflow: auto;
+}
+
+.slideshow:focus-visible {
+	outline-offset: 0;
+}
+
+.slide {
+	display: grid;
+	grid-template-rows: var(--header-size) 1fr;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	scroll-snap-align: start;
+	transition: color var(--transition-duration);
+}
+
+.slide-body {
+	overflow: auto;
+}
+
+.slideshow-sticky {
+	position: sticky;
+	inset: 0;
+	z-index: 1;
+	height: 0;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	height: var(--header-size);
+}
+
+.icon-button {
+	padding: var(--spacer);
+	aspect-ratio: 1;
+	display: flex;
+	background: none;
+	border: none;
+	color: var(--accent-color);
+	font-size: 1em;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	transition: color var(--transition-duration);
+}
+
+.icon-button svg {
+	width: 100%;
+	height: 100%;
+	fill: currentColor;
+	transition: transform var(--transition-duration);
+}
+
+@media (hover: hover) {
+	.icon-button:hover svg {
+		transform: scale(1.2);
+	}
+}
+
+.icon-button:active svg {
+	transform: scale(0.8);
+}
+
+#menu {
+	z-index: 1;
+}
+
+#menu rect {
+	transition: x var(--transition-duration);
+}
+
+#menu[aria-expanded='true'] rect:first-child {
+	x: 2.75px;
+}
+
+#menu[aria-expanded='true'] rect:nth-child(2) {
+	x: 4px;
+}
+
+#menu[aria-expanded='true'] rect:nth-child(3) {
+	x: 3.25px;
+}
+
+nav {
+	position: fixed;
+	inset: 0;
+	background: var(--navigation-background);
+	color: var(--navigation-text-color);
+	display: none;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	padding-block-start: var(--header-size);
+	backdrop-filter: blur(4px);
+}
+
+nav div {
+	display: flex;
+	overflow: auto;
+	flex-direction: column;
+	height: 100%;
+}
+
+nav[open] {
+	display: block;
+}
+
+nav a {
+	padding-inline: calc(3 / 2 * var(--spacer));
+	height: var(--header-size);
+	display: flex;
+	align-items: center;
+	color: inherit;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+@media (hover: hover) {
+	nav a:hover {
+		text-decoration: underline;
+	}
+}
+
+#theme-icon-mask-part {
+	transition: cx var(--transition-duration), cy var(--transition-duration);
+}
+
+.cover-art {
+	grid-row-start: 2;
+	position: relative;
+	display: grid;
+	place-items: center;
+	color: var(--header-text-color);
+	text-align: center;
+}
+
+.title {
+	grid-row-start: 2;
+	transform: translateY(-50%);
+	padding: var(--spacer);
+}
+
+#sky {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#sky stop {
+	transition: stop-color var(--transition-duration);
+}
+
+h1 {
+	margin: 0;
+	font-weight: 800;
+	font-size: 2em;
+}
+
+h2 {
+	height: var(--header-size);
+	padding-inline-start: var(--header-size);
+	margin: 0;
+	display: flex;
+	align-items: center;
+	font-weight: 800;
+}
+
+[role='doc-subtitle'] {
+	font-weight: 600;
+}
+
+.gallery {
+	scroll-snap-type: x mandatory;
+	overflow: auto;
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-rows: 100%;
+	grid-auto-columns: 100%;
+	gap: var(--spacer);
+}
+
+.gallery-item {
+	scroll-snap-align: center;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.gallery-info {
+	height: var(--header-size);
+	display: flex;
+}
+
+#project-name {
+	height: var(--header-size);
+	display: flex;
+	align-items: center;
+	font-weight: 600;
+}
+
+.network-link {
+	display: flex;
+	align-items: center;
+	height: var(--header-size);
+	padding-inline: calc(3 / 2 * var(--spacer));
+	color: inherit;
+	text-decoration: none;
+}
+
+@media (hover: hover) {
+	.network-link:hover {
+		text-decoration: underline;
+	}
+}
+
+@-moz-document url-prefix() {
+	#stars {
+		/* Firefox can't render <feTurbulence> at native resolution */
+		filter: none;
+	}
+}

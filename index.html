@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang='en' data-loading>
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+	<title>Kangming Deng</title>
+	<link rel='stylesheet' href='./index.css' />
+	<script>
+		'use strict';
+		// set theme before parsing main script to prevent flash
+		const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		const preferredTheme = localStorage.getItem('theme');
+		let currentTheme = preferredTheme || systemTheme;
+		document.documentElement.dataset.theme = currentTheme;
+		delete document.documentElement.dataset.loading;
+	</script>
+	<script defer src='./index.js'></script>
+	<link rel='preconnect' href='https://fonts.googleapis.com' />
+	<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;800&display=swap' />
+</head>
+<body>
+	<article id='slideshow' class='slideshow' tabindex='0'>
+		<div class='slideshow-sticky'>
+			<header>
+				<button aria-label='navigation menu' aria-expanded='false' id='menu' class='icon-button' type='button'>
+					<svg aria-hidden='true' viewBox='0 0 12 12'>
+						<rect x='3' y='4' width='6' height='1' />
+						<rect x='3' y='6' width='6' height='1' />
+						<rect x='3' y='8' width='6' height='1' />
+					</svg>
+				</button>
+				<nav aria-labelledby='menu' id='navigation'>
+					<div>
+						<a href='#home'>Home</a>
+						<a href='#projects'>Projects</a>
+						<a href='#links'>Links</a>
+					</div>
+				</nav>
+
+				<button aria-label='toggle color theme' id='theme-switcher' class='icon-button' type='button'>
+					<svg aria-hidden='true' id='theme-icon' viewBox='0 0 1 1'>
+						<defs>
+							<mask id='theme-icon-mask'>
+								<circle cx='50%' cy='50%' r='50%' fill='white' />
+								<circle id='theme-icon-mask-part' cx='85%' cy='10%' r='45%' fill='black' />
+							</mask>
+						</defs>
+						<rect width='100%' height='100%' mask='url(#theme-icon-mask)' transform='scale(0.75)' transform-origin='center' />
+					</svg>
+				</button>
+			</header>
+		</div>
+
+		<section id='home' class='slide cover-art'>
+			<svg aria-hidden='true' id='sky'>
+				<defs>
+					<linearGradient id='sky-gradient' gradientTransform='rotate(90)'>
+						<stop offset='0' stop-color='var(--sky-color-dark)' />
+						<stop offset='1' stop-color='var(--sky-color-light)' />
+					</linearGradient>
+
+					<filter id='star-filter' color-interpolation-filters='sRGB'>
+						<!--Color banding is noticeable in linear RGB color space, but not in sRGB.-->
+						<feTurbulence baseFrequency='0.1' />
+						<feColorMatrix values='
+								1 0 0 8 -5
+								0 1 0 8 -5
+								0 0 1 8 -5
+								0 0 0 0 1
+							' />
+						<feBlend in2='SourceGraphic' mode='screen' />
+					</filter>
+
+					<radialGradient id='star-gradient'>
+						<stop offset='0' stop-color='var(--meteor-color)' />
+						<stop offset='1' stop-color='var(--meteor-color)' stop-opacity='0' />
+					</radialGradient>
+
+					<marker id='star' viewBox='-8 -8 16 16' markerWidth='16' markerHeight='16'>
+						<g transform='rotate(-36)'>
+							<line x1='-8' y1='-8' x2='8' y2='8' stroke='url(#star-gradient)' stroke-width='1' />
+							<line x1='8' y1='-8' x2='-8' y2='8' stroke='url(#star-gradient)' stroke-width='1' />
+						</g>
+						<circle r='1' fill='var(--meteor-color)' />
+						<circle r='4' fill='url(#star-gradient)' />
+						<circle r='5' fill='transparent' stroke='var(--meteor-color)' stroke-width='0.5' opacity='0.5' />
+					</marker>
+
+					<linearGradient id='meteor-gradient'>
+						<stop offset='0' stop-color='var(--meteor-color)' />
+						<stop offset='1' stop-color='var(--meteor-color)' stop-opacity='0' />
+					</linearGradient>
+
+					<line id='meteor-template' stroke='url(#meteor-gradient)' marker-start='url(#star)'>
+						<animate attributeName='x1' calcMode='spline' keySplines='0 0.5 0.3 1' />
+						<animate attributeName='y1' calcMode='spline' keySplines='0 0.5 0.3 1' />
+						<animate attributeName='x2' calcMode='spline' keySplines='0 0 0.4 1' />
+						<animate attributeName='y2' calcMode='spline' keySplines='0 0 0.4 1' />
+						<animate attributeName='stroke-width' />
+					</line>
+				</defs>
+
+				<rect id='stars' width='100%' height='100%' fill='url(#sky-gradient)' filter='url(#star-filter)' />
+				<g id='meteor-shower'></g>
+			</svg>
+
+			<div class='title'>
+				<h1>Kangming Deng</h1>
+				<div role='doc-subtitle'>Software Engineer</div>
+			</div>
+		</section>
+
+		<section class='slide' id='projects'>
+			<h2 id='projects-title'>Projects</h2>
+			<div aria-labelledby='projects-title' role='listbox' id='project-root' class='gallery' tabindex='0'>
+				<img role='option' class='project gallery-item' alt='Connect N' src='https://raw.githubusercontent.com/Kamide/connect-n/main/screenshot.png' data-repo='https://github.com/Kamide/connect-n' />
+				<img role='option' class='project gallery-item' alt='Piano' src='https://raw.githubusercontent.com/Kamide/piano/main/screenshot.png' data-repo='https://github.com/Kamide/piano' />
+				<img role='option' class='project gallery-item' alt='CityChat' src='https://raw.githubusercontent.com/Kamide/citychat/master/src/screenshot.png' data-repo='https://github.com/Kamide/citychat' />
+				<img role='option' class='project gallery-item' alt='Concentration' src='https://raw.githubusercontent.com/Kamide/Concentration/master/src/screenshot.png' data-repo='https://github.com/Kamide/Concentration' />
+				<img role='option' class='project gallery-item' alt='Whiteboard' src='https://raw.githubusercontent.com/Kamide/Whiteboard/master/screenshots/assignment.png' data-repo='https://github.com/Kamide/Whiteboard' />
+				<img role='option' class='project gallery-item' alt='DSS' src='https://raw.githubusercontent.com/Kamide/DSS/master/screenshots/document.png' data-repo='https://github.com/Kamide/DSS' />
+				<img role=' option' class='project gallery-item' alt='Social Hacks: Mental Health' src='https://raw.githubusercontent.com/Kamide/Social-Hacks/master/images/BG.png' data-repo='https://github.com/Kamide/Social-Hacks' />
+			</div>
+			<div class='gallery-info'>
+				<a aria-labelledby='project-name' id='project-link' class='icon-button' href='#'>
+					<svg aria-hidden='true' viewBox='0 0 16 16'>
+						<defs>
+							<mask id='link-mask' maskContentUnits='objectBoundingBox'>
+								<rect width='1' height='1' rx='0.3' fill='white' />
+								<rect x='0.125' y='0.125' width='0.75' height='0.75' rx='0.2' fill='black' />
+								<rect x='0.5' width='0.5' height='0.5' fill='black' />
+							</mask>
+						</defs>
+
+						<rect x='3' y='3' width='10' height='10' mask='url(#link-mask)' />
+						<path d='M0,0 h5 v5 l-2,-2 -5,5 -1,-1 5,-5 z' transform='translate(9 2)' />
+					</svg>
+				</a>
+				<div id='project-name'></div>
+			</div>
+		</section>
+
+		<section class='slide' id='links'>
+			<h2>Links</h2>
+			<div class='slide-body'>
+				<a class='network-link' href='mailto:dengkangming@gmail.com'>Email</a>
+				<a class='network-link' href='https://github.com/Kamide'>GitHub</a>
+				<a class='network-link' href='https://www.linkedin.com/in/kangming-deng/'>LinkedIn</a>
+			</div>
+		</section>
+	</article>
+</body>
+</html>
