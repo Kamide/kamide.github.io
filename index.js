@@ -6,9 +6,16 @@ const slideshow = /**@type {HTMLDivElement}*/(document.getElementById('slideshow
 // autofocus attribute does not work if URL has hash fragment, so we need JS
 slideshow.focus();
 
-document.getElementById(location.hash.substring(1))?.scrollIntoView();
+const initialHash = location.hash.substring(1);
+if (initialHash) { // Firefox emits warnings if empty string is passed to document.getElementById
+	document.getElementById(initialHash)?.scrollIntoView();
+}
+
 addEventListener('hashchange', () => {
-	document.getElementById(location.hash.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+	const hash = location.hash.substring(1);
+	if (hash) {
+		document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
+	}
 });
 
 const navigation = /**@type {HTMLDivElement}*/(document.getElementById('navigation'));
