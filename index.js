@@ -89,7 +89,7 @@ let maxDuration = 2000;
 
 // #region meteor animation loop
 /**
- * @type {number | undefined}
+ * @type {ReturnType<setTimeout> | undefined}
  */
 let timer = undefined;
 let minDelay = 100;
@@ -98,31 +98,37 @@ let shouldAnimate = false;
 // #endregion
 
 function createMeteor(x1 = 0, y1 = 0, x2 = 0, y2 = 0, width = 1, duration = 1) {
-	const meteor = /**@type {SVGLineElement}*/(meteorTemplate.cloneNode(true));
-	const animations = meteor.querySelectorAll('animate');
-
-	animations[0].setAttribute('values', `${x2};${x1}`);
-	animations[1].setAttribute('values', `${y2};${y1}`);
-	animations[2].setAttribute('values', `${x2};${x1}`);
-	animations[3].setAttribute('values', `${y2};${y1}`);
-	animations[4].setAttribute('values', `0; ${`${width};`.repeat(4)} 0`);
-
-	for (const animation of animations) {
-		animation.setAttribute('dur', `${duration}ms`);
-	}
-
-	return { meteor, animations };
-}
-
-/**
- * @this {SVGAnimateElement}
- */
-function removeMeteor() {
-	this.targetElement?.remove();
+	const meteor = /**@type {SVGPathElement}*/(meteorTemplate.cloneNode());
+	Promise.allSettled([
+		meteor.animate([
+			{ d: `path('M ${x2},${y2} L ${x2},${y2}')` },
+			{ d: `path('M ${(x1 + x2) / 2},${(y1 + y2) / 2} L ${x2},${y2}')` },
+		], {
+			duration,
+			easing: 'cubic-bezier(0, 0.5, 0.3, 1)',
+		}).finished,
+		meteor.animate([
+			{ d: `path('M ${x1},${y1} L ${x1},${y1}')` },
+		], {
+			duration,
+			easing: 'cubic-bezier(0, 0, 0.4, 1)',
+		}).finished,
+		meteor.animate([
+			{ strokeWidth: 0 },
+			{ strokeWidth: width },
+			{ strokeWidth: width },
+			{ strokeWidth: width },
+			{ strokeWidth: width },
+			{ strokeWidth: 0 },
+		], {
+			duration,
+			easing: 'linear',
+		}).finished,
+	]).then(() => meteor.remove());
+	return meteor;
 }
 
 const between = (min = 0, max = 1) => Math.random() * (max - min) + min;
-const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
 function renderMeteor() {
 	const x1 = between(minX, maxX);
@@ -132,35 +138,10 @@ function renderMeteor() {
 	const y2 = distance * Math.sin(angle) + y1;
 	const width = between(minWidth, maxWidth);
 	const duration = between(minDuration, maxDuration);
-
-	const { meteor, animations } = createMeteor(x1, y1, x2, y2, width, duration);
-
-	if (isFirefox) {
-		// In Firefox, only the first meteor is animated. Subsequent meteors have an effective duration of 0.
-		// This is because the `endEvent` fires immediately after the <animate> element is connected to the DOM.
-		// We cannot use `SVGSVGElement.setCurrentTime(0)` because it will cause rubber banding.
-		// Connected meteors will snap back to their starting position.
-		setTimeout(() => meteor?.remove(), duration);
-	}
-	else {
-		animations[0].addEventListener('endEvent', removeMeteor);
-	}
-
-	meteorShower.append(meteor);
-
-	for (const animation of animations) {
-		animation.beginElement();
-	}
+	meteorShower.append(createMeteor(x1, y1, x2, y2, width, duration));
 }
 
-function startMeteorShower(reset = false) {
-	if (reset && !isFirefox) {
-		// In Chromium, only the first few meteors are not animated.
-		// Setting the current time to 0 before starting the first animation fixes this.
-		// We do not need to do this in Firefox because we are using `setTimeout` to handle removal.
-		meteorRootSvg.setCurrentTime(0);
-	}
-
+function startMeteorShower() {
 	renderMeteor();
 	timer = setTimeout(startMeteorShower, between(minDelay, maxDelay));
 }
@@ -187,7 +168,7 @@ meteorShowerResizeObserver.observe(meteorRootHtml);
 const meteorShowerIntersectionObserver = new IntersectionObserver(([{ isIntersecting }]) => {
 	if (isIntersecting) {
 		if (!timer) {
-			startMeteorShower(true);
+			startMeteorShower();
 			shouldAnimate = true;
 		}
 	}
@@ -206,7 +187,7 @@ document.addEventListener('visibilitychange', () => {
 		stopMeteorShower();
 	}
 	else if (!timer && shouldAnimate) {
-		startMeteorShower(true);
+		startMeteorShower();
 	}
 });
 
