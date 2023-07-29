@@ -54,8 +54,7 @@ themeSwitcher.addEventListener('click', () => {
 		themeSwitcher.ariaLabel = `switch to ${currentTheme} theme`;
 		localStorage.setItem('theme', nextTheme);
 		currentTheme = nextTheme;
-	}
-	else {
+	} else {
 		// prefers-color-scheme could change during execution, but we'll just take the original
 		delete document.documentElement.dataset.theme;
 		themeSwitcher.ariaLabel = `switch to ${systemTheme === 'dark' ? 'light' : 'dark'} theme`;
@@ -97,7 +96,7 @@ let maxDelay = 2000;
 let shouldAnimate = false;
 // #endregion
 
-function createMeteor(x1 = 0, y1 = 0, x2 = 0, y2 = 0, width = 1, duration = 1) {
+function createMeteor(x1 = 0, y1 = 0, x2 = 0, y2 = 0, strokeWidth = 1, duration = 1) {
 	const meteor = /**@type {SVGPathElement}*/(meteorTemplate.cloneNode());
 	Promise.allSettled([
 		meteor.animate([
@@ -115,10 +114,10 @@ function createMeteor(x1 = 0, y1 = 0, x2 = 0, y2 = 0, width = 1, duration = 1) {
 		}).finished,
 		meteor.animate([
 			{ strokeWidth: 0 },
-			{ strokeWidth: width },
-			{ strokeWidth: width },
-			{ strokeWidth: width },
-			{ strokeWidth: width },
+			{ strokeWidth },
+			{ strokeWidth },
+			{ strokeWidth },
+			{ strokeWidth },
 			{ strokeWidth: 0 },
 		], {
 			duration,
@@ -149,7 +148,9 @@ function startMeteorShower() {
 function stopMeteorShower() {
 	clearTimeout(timer);
 	timer = undefined;
-	meteorShower.replaceChildren();
+	for (const animation of meteorShower.getAnimations({ subtree: true })) {
+		animation.cancel(); // trigger the promise that removes the meteor
+	}
 }
 
 /**
@@ -171,8 +172,7 @@ const meteorShowerIntersectionObserver = new IntersectionObserver(([{ isIntersec
 			startMeteorShower();
 			shouldAnimate = true;
 		}
-	}
-	else {
+	} else {
 		stopMeteorShower();
 		shouldAnimate = false;
 	}
@@ -185,8 +185,7 @@ meteorShowerIntersectionObserver.observe(meteorRootHtml);
 document.addEventListener('visibilitychange', () => {
 	if (document.hidden) {
 		stopMeteorShower();
-	}
-	else if (!timer && shouldAnimate) {
+	} else if (!timer && shouldAnimate) {
 		startMeteorShower();
 	}
 });
