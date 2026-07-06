@@ -1,1 +1,0 @@
-https://kamide.github.io
