@@ -17,6 +17,9 @@
         padding: 0;
       }
       :root {
+        --primary: #2563eb;
+        --secondary: #475569;
+        --tertiary: #64748b;
         font-size: 18px;
       }
       body {
@@ -39,7 +42,7 @@
       p {
         margin-block-end: 3rem;
         a {
-          color: #0d9488;
+          color: var(--primary);
           font-weight: 600;
           text-decoration: none;
           text-underline-offset: calc(1 / 3 * 1em);
@@ -47,6 +50,9 @@
             text-decoration: underline;
           }
         }
+      }
+      abbr[title] {
+        text-underline-offset: calc(1 / 3 * 1em);
       }
       h2 {
         margin-block-end: 1rem;
@@ -64,7 +70,7 @@
       }
       .year-label {
         margin-block-end: calc(1 / 3 * 1rem);
-        color: #0d9488;
+        color: var(--primary);
         font-weight: 700;
         font-size: calc(4 / 3 * 1rem);
       }
@@ -89,18 +95,18 @@
         font-size: calc(5 / 6 * 1rem);
         list-style: none;
         a {
-          color: #64748b;
+          color: var(--secondary);
           text-decoration: none;
           &:hover {
-            color: #0d9488;
+            color: var(--primary);
           }
           &::before {
-            content: "[ ";
-            color: #94a3b8;
+            content: "[ " / "";
+            color: var(--tertiary);
           }
           &::after {
-            content: " ]";
-            color: #94a3b8;
+            content: " ]" / "";
+            color: var(--tertiary);
           }
         }
       }
@@ -122,7 +128,8 @@
           Hello! My name is Kangming, but you can call me Kang for short. I
           mainly work with TypeScript, Python, and Java, but I also like
           experimenting with other technologies. Feel free to browse my projects
-          below, and connect with me on
+          below, most of which are
+          <abbr title="progressive web apps">PWAs</abbr>, and connect with me on
           <a href="https://www.linkedin.com/in/kangming-deng/" rel="me"
             >LinkedIn</a
           >
