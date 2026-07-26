@@ -3,54 +3,211 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="0; url=https://github.com/Kamide" http-equiv="refresh" />
-    <title>Redirecting</title>
+    <title>Kangming Deng</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
       :root {
         font-size: 18px;
       }
       body {
-        margin: 0;
-        background: #f1f1f1;
-        color: #303030;
-        font-family: system-ui, sans-serif;
-        text-align: center;
-        text-wrap: balance;
+        padding-inline: 2rem;
+        padding-block: 3rem;
+        line-height: calc(5 / 3);
+        font-family: "Source Sans 3", sans-serif;
+        font-optical-sizing: auto;
       }
       main {
-        margin-block: 9svh;
-        padding: 1rem;
+        margin: auto;
+        max-width: 640px;
+      }
+      h1 {
+        margin-block-start: calc(1 / 3 * 1rem);
+        margin-block-end: 1rem;
+        font-weight: 700;
+        font-size: 3rem;
       }
       p {
-        margin-block: 1rem;
+        margin-block-end: 3rem;
+        a {
+          color: #0d9488;
+          font-weight: 600;
+          text-decoration: none;
+          text-underline-offset: calc(1 / 3 * 1em);
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
-      a {
-        color: #0666f6;
-        font-weight: bold;
-        text-decoration: none;
+      h2 {
+        margin-block-end: 1rem;
+        font-weight: 700;
+        font-size: calc(4 / 3 * 1rem);
       }
-      a:hover {
-        text-decoration: underline;
+      .year-group {
+        display: flex;
+        flex-wrap: wrap;
+        margin-block-end: 1rem;
+        &:not(:last-child) {
+          border-block-end: 1px solid #e2e8f0;
+          padding-block-end: 1rem;
+        }
       }
-      .lead {
-        font-size: 1.25rem;
+      .year-label {
+        margin-block-end: calc(1 / 3 * 1rem);
+        color: #0d9488;
+        font-weight: 700;
+        font-size: calc(4 / 3 * 1rem);
       }
-      .instruction {
-        color: #909090;
-        font-style: italic;
-        font-size: 0.875rem;
+      .project-items {
+        width: 100%;
+      }
+      .project {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: calc(2 / 3 * 1rem);
+      }
+      .project-name {
+        font-weight: 600;
+      }
+      .project-links {
+        display: inline-flex;
+        align-items: baseline;
+        gap: calc(1 / 3 * 1rem);
+        margin: 0;
+        padding: 0;
+        font-size: calc(5 / 6 * 1rem);
+        list-style: none;
+        a {
+          color: #64748b;
+          text-decoration: none;
+          &:hover {
+            color: #0d9488;
+          }
+          &::before {
+            content: "[ ";
+            color: #94a3b8;
+          }
+          &::after {
+            content: " ]";
+            color: #94a3b8;
+          }
+        }
+      }
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+        h1 {
+          font-size: calc(7 / 3 * 1rem);
+        }
       }
     </style>
   </head>
   <body>
     <main>
-      <p class="lead">
-        Redirecting to
-        <a href="https://github.com/Kamide">github.com/Kamide</a>&hellip;
-      </p>
-      <p class="instruction">
-        Please click the link above if you are not automatically redirected.
-      </p>
+      <header>
+        <h1>Kangming Deng</h1>
+        <p>
+          Hello! My name is Kangming, but you can call me Kang for short. I
+          mainly work with TypeScript, Python, and Java, but I also like
+          experimenting with other technologies. Feel free to browse my projects
+          below, and connect with me on
+          <a href="https://www.linkedin.com/in/kangming-deng/" rel="me"
+            >LinkedIn</a
+          >
+          and <a href="https://github.com/Kamide" rel="me">GitHub</a>.
+        </p>
+      </header>
+      <section>
+        <h2>Projects</h2>
+        <ul>
+          <li class="year-group">
+            <span class="year-label">2026</span>
+            <ul class="project-items">
+              <li class="project">
+                <span class="project-name">Colour Filter Camera</span>
+                <ul class="project-links">
+                  <li>
+                    <a href="https://kamide.github.io/colour-filter-camera/"
+                      >Live</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://github.com/Kamide/colour-filter-camera"
+                      >Repo</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="project-items">
+              <li class="project">
+                <span class="project-name">Ball in a Maze</span>
+                <ul class="project-links">
+                  <li>
+                    <a href="https://kamide.github.io/ball-in-a-maze/">Live</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Kamide/ball-in-a-maze">Repo</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="year-group">
+            <span class="year-label">2022</span>
+            <ul class="project-items">
+              <li class="project">
+                <span class="project-name">Connect N</span>
+                <ul class="project-links">
+                  <li>
+                    <a href="https://kamide.github.io/connect-n/">Live</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Kamide/connect-n">Repo</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="project-items">
+              <li class="project">
+                <span class="project-name">Piano</span>
+                <ul class="project-links">
+                  <li><a href="https://kamide.github.io/piano/">Live</a></li>
+                  <li><a href="https://github.com/Kamide/piano">Repo</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="year-group">
+            <span class="year-label">2017</span>
+            <ul class="project-items">
+              <li class="project">
+                <span class="project-name">Social Hacks: Mental Health</span>
+                <ul class="project-links">
+                  <li>
+                    <a href="https://kamide.github.io/Social-Hacks/">Live</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Kamide/Social-Hacks">Repo</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
     </main>
   </body>
 </html>
