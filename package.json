@@ -1,0 +1,14 @@
+{
+  "name": "kamide.github.io",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "3.9.5",
+    "prettier-plugin-css-order": "2.2.0"
+  }
+}
