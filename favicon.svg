@@ -1,0 +1,39 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>康</title>
+  <defs>
+    <clipPath id="a">
+      <circle cx="256" cy="256" r="256" />
+    </clipPath>
+    <clipPath id="b">
+      <path d="M56.213911 507.10065 260.14513-68.837448 464.07634 471.55309Z" />
+    </clipPath>
+    <clipPath id="c">
+      <path d="m10 512 246-675.87945L502 512Z" />
+    </clipPath>
+    <clipPath id="d">
+      <path d="M72 512 268.77013-28.621485 465.54025 512Z" />
+    </clipPath>
+    <clipPath id="e">
+      <rect height="136" transform="rotate(-70)" width="75.040176" x="320.61777" y="184" />
+    </clipPath>
+    <clipPath id="f">
+      <path d="m-349.76236 380.13035 405.894395.00029L194.95634 761.54649z" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#a)">
+    <rect fill="#6cd8ba" height="512" width="512" />
+    <rect clip-path="url(#b)" height="24" transform="skewY(5)" width="104.39726" x="208.79453" y="41.252949" />
+    <rect clip-path="url(#c)" height="24" width="512" y="128" />
+    <rect height="24" transform="rotate(-70)" width="391.83929" x="-477.70242" y="184.51125" />
+    <rect clip-path="url(#d)" height="24" width="354.89331" y="184" />
+    <rect clip-path="url(#e)" height="24" transform="rotate(70)" width="153.46344" x="282.56122" y="-262.35043" />
+    <rect clip-path="url(#d)" height="24" width="375.27563" y="240" />
+    <rect height="24" width="145.45966" x="366.54034" y="240" />
+    <rect clip-path="url(#d)" height="24" width="395.65796" y="296" />
+    <rect height="364" width="23.971062" x="252.02893" y="148" />
+    <circle cx="187.71904" cy="374" r="14" />
+    <circle cx="177.13942" cy="434" r="16" />
+    <rect clip-path="url(#f)" height="24" transform="rotate(-35)" width="137.85147" x="-29.567163" y="499.41763" />
+    <rect height="24" transform="rotate(35)" width="210.14035" x="479.81207" y="141.9267" />
+  </g>
+</svg>
